@@ -1,9 +1,8 @@
 from bot.connector import IRCProtocol
-import bot.handler.prob_handler as handler
+import bot.handler.shiro_handler as handler
 import asyncio
 import signal
 import functools
-
 
 def signal_handler(protocols, loop):
     print('\r[+] Input command')
@@ -25,14 +24,14 @@ class IRCSetting:
         self.initial_commands = [
             'USER ' + (botname + ' ') * 3 + ':' + botnick + '\n',
             'NICK ' + botnick + '\n',
-            'JOIN ' + '#maronet' + '\n',
+            'JOIN ' + '#MK_RD' + '\n',
         ]
 
 if __name__ == '__main__':
     host = 'moe.uriirc.org'
     port = '16667'
     loop = asyncio.get_event_loop()
-    protocol = IRCProtocol(loop, IRCSetting('prob-bot', 'Pr'), handler)
+    protocol = IRCProtocol(loop, IRCSetting('shiro-bot', 'Shiro'), handler)
     conn = loop.create_connection(
         lambda: protocol,
         host=host,
