@@ -116,7 +116,10 @@ class ShiroHandler(BaseMessageHandler):
         elif message.command == 'INVITE':
             channel = message.params[1]
             self.join_channel(channel)
-            self.send_message(channel,'시로'+self.dotGen()+channel[1:]+'에'+self.dotGen()+'빠'+self.dotGen()+'는 어디?')
+            channel_modify=''
+            for i in channel[1:]:
+                channel_modify=channel_modify+i+u'\u200b'
+            self.send_message(channel,'시로'+self.dotGen()+channel_modify+'에'+self.dotGen()+'빠'+self.dotGen()+'는 어디?')
             self.modifyTension(channel[1:],100.0)
         elif message.command == 'MODE':
             nick = message.nick
