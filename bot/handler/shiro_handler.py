@@ -86,18 +86,20 @@ class ShiroHandler(BaseMessageHandler):
                 elif content[0:2]=='위키':
                     target = (content[3:].strip(' ')).lower().title()
                     target = re.sub('\s+','_',target)
-                    banlist = ['Main_Page',':','.php','=']
+                    banlist = ['Main_Page',':','.php','=','%00']
                     for i in banlist:
                         if i in target:
                             self.send_message(channel,'제대로'+self.dotGen()+'검색'+self.dotGen()+'해줘')
+                            return
                     url,summary = wiki_crawler(target)
                     if tension <= 50:
                         self.send_message(channel,'...')
                         return
-                    if url is None or 'not exist. You can' in summary:
-                        self.send_message(channel,'정확한'+self.dotGen()+'결과'+self.dotGen()+'없음. 실수'+self.dotGen(3)+'아냐?')
+                    if url is None:
+                        self.send_message(channel,'정확한'+self.dotGen()+'결과'+self.dotGen()+'없어. 실수'+self.dotGen(3)+'아냐?')
                     else:
                         if summary is None:
+                            self.send_message(channel,'다수의'+self.dotGen()+'결과 얻었어'+self.dotGen()+'확인'+self.dotGen()+'해줘?')
                             self.send_message(channel,url)
                         else:
                             self.send_message(channel,url)
